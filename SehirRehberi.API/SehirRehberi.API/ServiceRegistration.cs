@@ -10,12 +10,12 @@ namespace SehirRehberi.API
     {
         public static void AddServices(this IServiceCollection services)
         {
-            ConfigurationManager configurationManager = new();
-            var key = Encoding.ASCII.GetBytes(configurationManager.GetSection("AppSettings:Token").Value);
+            var key = Encoding.ASCII.GetBytes(Configuration.ConfigurationTokenString);
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.ConfigurationString));
             services.AddScoped<IAppRepository, AppRepositoriy>();
-             services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling =
                    Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -23,7 +23,7 @@ namespace SehirRehberi.API
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
