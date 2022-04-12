@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using SehirRehberi.API.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SehirRehberi.API
 {
@@ -10,6 +12,9 @@ namespace SehirRehberi.API
     {
         public static void AddServices(this IServiceCollection services)
         {
+
+            ConfigurationManager configurationManager = new();
+
             var key = Encoding.ASCII.GetBytes(Configuration.ConfigurationTokenString);
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.ConfigurationString));
@@ -31,6 +36,8 @@ namespace SehirRehberi.API
                         ValidateAudience = false,
                     };
                 });
+            // appsetting.json dosyasındaki değerleri okuyamıyor photo controller bu yüzden patlıyor.
+            services.Configure<CloudinarySettings>(configurationManager.GetSection("appsetting.json:CloudinarySettings"));
         }
     }
 }

@@ -2,6 +2,7 @@ using SehirRehberi.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Olusturulan configure servis dosyasýný baslangýcta calýsmasý icin eklendi
 builder.Services.AddServices();
 // Veri tabanýndan gelen verileri maplemek icin Automapper baslangýca eklendi

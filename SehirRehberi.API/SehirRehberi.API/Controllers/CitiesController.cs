@@ -8,7 +8,7 @@ using SehirRehberi.API.Models;
 namespace SehirRehberi.API.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     
     public class CitiesController : ControllerBase
     {

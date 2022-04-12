@@ -21,7 +21,9 @@
                 /*configurationManager.AddJsonFile("appsettings.json");
                 return configurationManager.GetSection("Token").Value;
                 */
-                return configurationManager.GetValue<string>("AppSettings:Token", "gizli/*-+?&% anahtar");
+
+                // yazılı olan default degeri gönderiyor appsetting.json dosyasından deger okumuyor
+                return configurationManager.GetValue<string>("AppSettings:Token", "gizli/*-+?&% anahtar");  
             }
         }
     }
